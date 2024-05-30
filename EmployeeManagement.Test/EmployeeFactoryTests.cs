@@ -1,7 +1,7 @@
 ﻿using EmployeeManagement.Business;
 using EmployeeManagement.DataAccess.Entities;
 
-namespace EmploymentManagement.Test;
+namespace EmployeeManagement.Test;
 
 public class EmployeeFactoryTests
 {
