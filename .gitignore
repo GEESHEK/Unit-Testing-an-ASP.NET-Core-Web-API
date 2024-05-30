@@ -485,7 +485,7 @@ $RECYCLE.BIN/
 
 EmployeeManagement/bin/*
 EmployeeManagement/obj/*
-EmploymentManagement.Test/bin/*
-EmploymentManagement.Test/obj/*
+EmployeeManagement.Test/bin/*
+EmployeeManagementManagement.Test/obj/*
 TopLevelManagement/bin/*
 TopLevelManagement/obj/*
