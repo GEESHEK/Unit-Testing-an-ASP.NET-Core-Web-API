@@ -11,7 +11,7 @@ public class CourseTests
         // nothing to see here
         
         // Act
-        var course = new Course("Dosaster Management 101");
+        var course = new Course("Disaster Management 101");
         
         // Assert
         Assert.True(course.IsNew);
