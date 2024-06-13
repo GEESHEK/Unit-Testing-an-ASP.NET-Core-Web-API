@@ -1,0 +1,19 @@
+﻿using EmployeeManagement.DataAccess.Entities;
+
+namespace EmployeeManagement.Test;
+
+public class CourseTests
+{
+    [Fact]
+    public void CourseConstructor_ConstructCourse_IsNewMustBeTrue()
+    {
+        // Arrange
+        // nothing to see here
+        
+        // Act
+        var course = new Course("Dosaster Management 101");
+        
+        // Assert
+        Assert.True(course.IsNew);
+    }
+}
