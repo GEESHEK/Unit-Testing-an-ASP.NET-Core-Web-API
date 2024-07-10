@@ -66,4 +66,24 @@ public class EmployeeServiceTests
         Assert.All(internalEmployee.AttendedCourses,
             course => Assert.False(course.IsNew));
     }
+    
+    [Fact]
+    public async Task CreateInternalEmployee_InternalEmployeeCreated_MustHaveAttendedFirstObligatoryCourse_Async()
+    {
+        // Arrange
+        var employeeManagementTestDataRepository =
+            new EmployeeManagementTestDataRepository();
+        var employeeService = new EmployeeService(
+            employeeManagementTestDataRepository,
+            new EmployeeFactory());
+        var obligatoryCourse = await employeeManagementTestDataRepository
+            .GetCourseAsync(Guid.Parse("37e03ca7-c730-4351-834c-b66f280cdb01"));
+
+        // Act
+        var internalEmployee = await employeeService
+            .CreateInternalEmployeeAsync("Brooklyn", "Cannon");
+
+        // Assert
+        Assert.Contains(obligatoryCourse, internalEmployee.AttendedCourses);
+    }
 }
