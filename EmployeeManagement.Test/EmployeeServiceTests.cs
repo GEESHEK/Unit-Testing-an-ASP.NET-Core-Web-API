@@ -1,4 +1,6 @@
 ﻿using EmployeeManagement.Business;
+using EmployeeManagement.Business.Exceptions;
+using EmployeeManagement.DataAccess.Entities;
 using EmployeeManagement.Test.Services;
 
 namespace EmployeeManagement.Test;
@@ -43,7 +45,7 @@ public class EmployeeServiceTests
         Assert.Contains(internalEmployee.AttendedCourses,
             course => course.Id == Guid.Parse("37e03ca7-c730-4351-834c-b66f280cdb01"));
     }
-    
+
     [Fact]
     public void CreateInternalEmployee_InternalEmployeeCreated_AttendedCoursesMustNotBeNew()
     {
@@ -66,7 +68,7 @@ public class EmployeeServiceTests
         Assert.All(internalEmployee.AttendedCourses,
             course => Assert.False(course.IsNew));
     }
-    
+
     [Fact]
     public async Task CreateInternalEmployee_InternalEmployeeCreated_MustHaveAttendedFirstObligatoryCourse_Async()
     {
@@ -86,4 +88,38 @@ public class EmployeeServiceTests
         // Assert
         Assert.Contains(obligatoryCourse, internalEmployee.AttendedCourses);
     }
+
+    [Fact]
+    public async Task GiveRaise_RaiseBelowMinimumGiven_EmployeeInvalidRaiseExceptionMustBeThrown()
+    {
+        // Arrange 
+        var employeeService = new EmployeeService(
+            new EmployeeManagementTestDataRepository(),
+            new EmployeeFactory());
+        var internalEmployee = new InternalEmployee(
+            "Brooklyn", "Cannon", 5, 300, false, 1);
+
+        // Act & Assert > wrap the exception
+        await Assert.ThrowsAsync<EmployeeInvalidRaiseException>(
+                async () =>
+                    await employeeService.GiveRaiseAsync(internalEmployee, 50)
+            );
+    }
+    
+    // [Fact] Always async and await async methods or it might pass
+    // public void GiveRaise_RaiseBelowMinimumGiven_EmployeeInvalidRaiseExceptionMustBeThrown_Mistake()
+    // {
+    //     // Arrange 
+    //     var employeeService = new EmployeeService(
+    //         new EmployeeManagementTestDataRepository(),
+    //         new EmployeeFactory());
+    //     var internalEmployee = new InternalEmployee(
+    //         "Brooklyn", "Cannon", 5, 300, false, 1);
+    //
+    //     // Act & Assert
+    //     Assert.ThrowsAsync<EmployeeInvalidRaiseException>(
+    //         async () =>
+    //             await employeeService.GiveRaiseAsync(internalEmployee, 50)
+    //     );
+    // }
 }
