@@ -19,4 +19,49 @@ public class EmployeeFactoryTests
         //Assert: verifying the executed action
         Assert.Equal(2500, employee.Salary);
     }
+    
+    [Fact]
+    public void CreateEmployee_ConstructInternalEmployee_SalaryMustBeBetween2500And3500()
+    {
+        //Arrange: setting up the test
+        var employeeFactory = new EmployeeFactory();
+        
+        //Act: executing the actual test
+        var employee = (InternalEmployee)employeeFactory
+            .CreateEmployee("Kevin", "Dockx");
+        
+        //Assert: verifying the executed action
+        Assert.True(employee.Salary is >= 2500 and <= 3500,
+            "Salary not in acceptable range.");
+    }
+    
+    [Fact]
+    public void CreateEmployee_ConstructInternalEmployee_SalaryMustBeBetween2500And3500_AlternativeWay()
+    {
+        //Arrange: setting up the test
+        var employeeFactory = new EmployeeFactory();
+        
+        //Act: executing the actual test
+        var employee = (InternalEmployee)employeeFactory
+            .CreateEmployee("Kevin", "Dockx");
+        
+        //Assert: verifying the executed action
+        Assert.InRange(employee.Salary, 2500, 3500);
+    }
+    
+    [Fact]
+    public void CreateEmployee_ConstructInternalEmployee_SalaryMustBe2500_PrecisionExample()
+    {
+        //Arrange: setting up the test
+        var employeeFactory = new EmployeeFactory();
+        
+        //Act: executing the actual test
+        var employee = (InternalEmployee)employeeFactory
+            .CreateEmployee("Kevin", "Dockx");
+        employee.Salary = 2500.123m;
+        
+        //Assert: verifying the executed action
+        Assert.Equal(2500, employee.Salary, 0);
+    }
+    
 }
